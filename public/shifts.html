@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shifts_styles.css">
+
+
+    <title>Keshet Employee Management System</title>
+
+</head>
+
+<body lang="he" dir="rtl">
+    <div class="bg"></div>
+    <div class="content">
+        <header>
+            <div class="headerlinks text-right header_footer_bg">
+                <a href="./index.html"><img src="./img/logokeshet.png" class="logo"></a>
+                <a href="./index.html">
+                    <h2>קשת | האגודה למען הקשיש</h2>
+                </a>
+            </div>
+        </header>
+
+        <nav class="navbar navbar-expand-sm navbar-light navstyle">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav text-right">
+                    <a class="nav-link" href="index.html">בית </a>
+                    <a class="nav-link active" href="shifts.html">משמרות <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="tasks.html">משימות</a>
+                    <a class="nav-link" href="employees.html">עובדים</a>
+                    <a class="nav-link" href="guides.html">הדרכות</a>
+                    <a class="nav-link" href="convertcsv.html">הסעות</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="text-right">
+            <h1 class="font-weight-bold text-center head1">
+                משמרות</h1>
+
+            <div class="d-flex flex-md-row flex-column">
+                <section class="col text-justify">
+
+
+
+                    <article class="text-center">
+                        <h3 class="text-center">ניתן להדפיס על ידי לחיצה על כפתור ההדפסה</h3>
+
+                        <div class="text-center">
+                            <iframe
+                                src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%2333B679&ctz=Asia%2FJerusalem&title=%D7%99%D7%95%D7%9E%D7%9F%20%D7%9E%D7%A9%D7%9E%D7%A8%D7%95%D7%AA&mode=WEEK&showNav=0&showTabs=0&showCalendars=0&src=bWlzaC5naXZhdC5zaGxvc2hhQGdtYWlsLmNvbQ&src=aXcuamV3aXNoI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&color=%230B8043"
+                                style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                        </div>
+                    </article>
+
+                    <article>
+                        <div class="text-center">
+                            <h3>או לסנכרן את המשמרות ליומן גוגל הפרטי שלכם</h3>
+                        </div>
+
+                        <ul>
+                            <li>
+                                <h4>משמרת בוקר</h4>
+                                <a target="_blank"
+                                    href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=MXFwMm51OWZ1OXM5cG9sNXU2YmszN2tycXNfMjAyMjA0MTdUMDQwMDAwWiBtaXNoLmdpdmF0LnNobG9zaGFAbQ&amp;tmsrc=mish.givat.shlosha%40gmail.com&amp;scp=ALL"><img
+                                        border="0"
+                                        src="https://www.google.com/calendar/images/ext/gc_button1_iw.gif"></a>
+                            </li>
+                            <li>
+                                <h4>משמרת צהריים</h4>
+                                <a target="_blank"
+                                    href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=N3Nmc2tlMzJiNzkwbXNjMjk1NGo4dmVxdWZfMjAyMjA0MTdUMTIwMDAwWiBtaXNoLmdpdmF0LnNobG9zaGFAbQ&amp;tmsrc=mish.givat.shlosha%40gmail.com&amp;scp=ALL"><img
+                                        border="0"
+                                        src="https://www.google.com/calendar/images/ext/gc_button1_iw.gif"></a>
+                            </li>
+                            <li>
+                                <h4>משמרת לילה</h4>
+                                <a target="_blank"
+                                    href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=Mm5sMmxrYzliNDdzNGRkam9jbDExNTloNjBfMjAyMjA0MTdUMjAwMDAwWiBtaXNoLmdpdmF0LnNobG9zaGFAbQ&amp;tmsrc=mish.givat.shlosha%40gmail.com&amp;scp=ALL"><img
+                                        border="0"
+                                        src="https://www.google.com/calendar/images/ext/gc_button1_iw.gif"></a>
+                            </li>
+                        </ul>
+                    </article>
+                </section>
+                <aside>
+                    <h5>שעות המשמרות:</h5>
+
+                    <article id="eventsArticle">
+                        משמרת בוקר 7:30-15:30 </article>
+
+                    <article id="eventsArticle">
+                        משמרת צהרים 15:00-23:30
+                    </article>
+
+                    <article id="eventsArticle">
+                        משמרת לילה 23:00-7:30
+                    </article>
+                </aside>
+            </div>
+
+        </main>
+
+        <footer class="text-center header_footer_bg">
+            <p>
+                אתר זה נבנה במסגרת סדנה במערכות מידע
+                על ידי
+        
+                <a href="mailto:edenme@mta.ac.il">עדן מלמד</a>,
+                <a href="mailto:yinoki@mta.ac.il">יוני כיאט</a> ו<a href="mailto:gurariedu@mta.ac.il">גור דובילנסקי</a>
+        
+                <br>
+                <a href="https://www.keshetaguda.org.il/" target="_blank">אתר העמותה</a> |
+                <a href="https://www.facebook.com/KeshetAguda/" target="_blank">פייסבוק</a> |
+                <a href="https://mta.ac.il" target="_blank">MTA</a>
+                <br>
+                כל הזכויות שמורות 2022
+            </p>
+        </footer>
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
+
+    </div>
+</body>
+
+</html>

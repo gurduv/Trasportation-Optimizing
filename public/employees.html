@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/index_styles.css">
+    <link rel="stylesheet" href="css/employees_styles.css">
+
+    <title>Keshet Employee Management System</title>
+</head>
+
+<body lang="he" dir="rtl">
+    <div class="bg"></div>
+    <div class="content">
+        <header>
+            <div class="headerlinks text-right header_footer_bg">
+                <a href="/index.html"><img src="./img/logokeshet.png" class="logo"></a>
+                <a href="/index.html">
+                    <h2>קשת | האגודה למען הקשיש</h2>
+                </a>
+            </div>
+        </header>
+
+        <nav class="navbar navbar-expand-sm navbar-light navstyle">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav text-right">
+                    <a class="nav-link" href="index.html">בית</a>
+                    <a class="nav-link" href="shifts.html">משמרות</a>
+                    <a class="nav-link" href="tasks.html">משימות</a>
+                    <a class="nav-link active" href="employees.html">עובדים <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="guides.html">הדרכות</a>
+                    <a class="nav-link" href="convertcsv.html">הסעות</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="text-right">
+            <h1 class="font-weight-bold text-center head1">
+                מידע על העובדים</h1>
+
+
+            <div class="d-flex flex-md-row flex-column">
+                <section class="col text-justify">
+                
+                <article class="text-center">
+                    <h2>בחר שם עובד</h2>
+                    <!-- <form method="POST"> -->
+                        <select id="employees_array" name="employees" class="custom-select custom-select-lg mb-3" style="width: 200px">
+                            
+                        </select>
+                        <br>
+                        <!-- <input type="submit" name="submit" value="בצע" class="btn btn-primary mb-2" > -->
+                        <button onclick="getOption()" class="btn btn-primary mb-2">בצע</button>
+                        
+                    <!-- </form> -->
+                    </article>
+                    <p> הנבחר הוא:
+                        <span id="output"></span>
+                    </p>
+
+                <article>
+                                        <table>
+                                            <tr>
+                                                <td>מספר עובד:</td>
+                                                <td id="worker_id"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>שם פרטי: </td>
+                                                <td id="name"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>שם משפחה: </td>
+                                                <td id="surname"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>רחוב: </td>
+                                                <td id="street_name"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>מספר: </td>
+                                                <td id="street_code"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>עיר: </td>
+                                                <td id="city_name"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>טלפון: </td>
+                                                <td id="tel"></td>
+                                            </tr>
+                                        </table>
+
+                </article>
+
+                <article>
+                    <h5>תוצאות</h5>
+                    שם מלא:
+                    <p id="resultFullname"></p>
+                    כתובת מלאה:
+                    <p id="resultAddress"></p>
+                    <p id="fullList"></p>
+                </article>
+
+                </section>
+
+                <aside class="col-2-lg">
+                <article id="eventsArticle">
+            יש לבחור עובד מהרשימה<br>
+            הפרטים שיוצגו כוללים <br> את הנתונים האישיים       
+            </article>
+                </aside>
+            </div>
+
+        </main>
+
+        <footer class="text-center header_footer_bg">
+            <p>
+                אתר זה נבנה במסגרת סדנה במערכות מידע
+                על ידי
+
+                <a href="mailto:edenme@mta.ac.il">עדן מלמד</a>,
+                <a href="mailto:yinoki@mta.ac.il">יוני כיאט</a> ו<a href="mailto:gurariedu@mta.ac.il">גור דובילנסקי</a>
+
+                <br>
+                <a href="https://www.keshetaguda.org.il/" target="_blank">אתר העמותה</a> |
+                <a href="https://www.facebook.com/KeshetAguda/" target="_blank">פייסבוק</a> |
+                <a href="https://mta.ac.il" target="_blank">MTA</a>
+                <br>
+                כל הזכויות שמורות 2022
+            </p>
+        </footer>
+
+        <script type="module" src="./js/employees.js"></script>
+        
+        <!-- <script type="module">
+            import {idArr, fullnameArr, nameArr, surnameArr, streetArr, numberArr, cityArr, phoneArr, fullAddressArr} from "./js/employees.js";
+
+            function getOption() {
+                selectElement = document.querySelector('#employees_array');
+                outputIndex = selectElement.selectedIndex + 1;
+                //output = selectElement.options[selectElement.selectedIndex].value;
+                //document.getElementById('output').innerHTML = outputIndex;
+                document.querySelector('#output').addEventListener('click', outputIndex)
+            }
+        </script> -->
+
+        <!-- <script>
+            function getOption() {
+                selectElement = document.querySelector('#employees_array');
+                outputIndex = selectElement.selectedIndex + 1;
+                //output = selectElement.options[selectElement.selectedIndex].value;
+                document.getElementById('output').innerHTML = outputIndex;
+            }
+        </script> -->
+
+        <script type="module">
+            // import {idArr, fullnameArr, nameArr, surnameArr, streetArr, numberArr, cityArr, phoneArr, fullAddressArr} from "./js/employees.js";
+            import * as employees from "./js/employees.js";
+
+                      console.log(employees.nameArr[64]);
+
+        </script>
+
+
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
+
+    </div>
+</body>
+
+</html>
