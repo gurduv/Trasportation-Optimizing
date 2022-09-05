@@ -1,7 +1,7 @@
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 0, lng: 0},
-      zoom: 3,
+      center: {lat: 32, lng: 35},
+      zoom: 9,
       styles: [{
         featureType: 'poi',
         stylers: [{ visibility: 'off' }]  // Turn off points of interest.

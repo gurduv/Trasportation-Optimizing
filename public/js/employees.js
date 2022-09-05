@@ -47,7 +47,7 @@
 
     // read data
     const dbRef = ref(database, 'employees/');
-
+    
     onValue(dbRef, (snapshot) => {
         snapshot.forEach((childSnapshot) => {
             const childKey = childSnapshot.key;
@@ -107,21 +107,39 @@
 
           
 
-            // console.log(nameArr[64]);
-            // console.log(idArr[64]);
-            // document.getElementById('worker_id').innerHTML = idArr[64];
-            // document.getElementById('name').innerHTML = nameArr[64];
-            // document.getElementById('surname').innerHTML = surnameArr[64];
-            // document.getElementById('street_name').innerHTML = streetArr[64];
-            // document.getElementById('street_code').innerHTML = numberArr[64];
-            // document.getElementById('city_name').innerHTML = cityArr[64];
-            // document.getElementById('tel').innerHTML = phoneArr[64];
+            console.log(nameArr[64]);
+            console.log(idArr[64]);
+            document.getElementById('worker_id').innerHTML = idArr[64];
+            document.getElementById('name').innerHTML = nameArr[64];
+            document.getElementById('surname').innerHTML = surnameArr[64];
+            document.getElementById('street_name').innerHTML = streetArr[64];
+            document.getElementById('street_code').innerHTML = numberArr[64];
+            document.getElementById('city_name').innerHTML = cityArr[64];
+            document.getElementById('tel').innerHTML = phoneArr[64];
 
-            // document.getElementById('resultFullname').innerHTML = fullnameArr[64];
-            // document.getElementById('resultAddress').innerHTML = fullAddressArr[64];
+            document.getElementById('resultFullname').innerHTML = fullnameArr[64];
+            document.getElementById('resultAddress').innerHTML = fullAddressArr[64];
             
-            // console.log(fullnameArr[64]);
-            // console.log(fullAddressArr[64]);
+            console.log(fullnameArr[64]);
+            console.log(fullAddressArr[64]);
+
+            var geocoder = new google.maps.Geocoder();
+            var address = fullAddressArr[64];
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    console.log(results[0].geometry.location.lat())
+                    console.log(results[0].geometry.location.lng())
+                    document.getElementById('location').innerHTML = results[0].geometry.location;
+                    // map.setCenter(results[0].geometry.location);
+                    // var marker = new google.maps.Marker({
+                    //     map: map,
+                    //     position: results[0].geometry.location
+                    // });
+
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
 
         }, {
             onlyOnce: true
