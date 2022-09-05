@@ -153,7 +153,17 @@
         <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM&libraries=visualization&region=IL&language=he&callback=initMap">
         </script>
 
-        
+          <script>
+            function getOption() {
+                selectElement = document.querySelector('#employees_array');
+                outputIndex = selectElement.selectedIndex + 1;
+                //output = selectElement.options[selectElement.selectedIndex].value;
+                document.getElementById('output').innerHTML = outputIndex;
+            }
+        </script>
+
+
+
         <!-- <script type="module">
             import {idArr, fullnameArr, nameArr, surnameArr, streetArr, numberArr, cityArr, phoneArr, fullAddressArr} from "./js/employees.js";
 
@@ -164,23 +174,6 @@
                 //document.getElementById('output').innerHTML = outputIndex;
                 document.querySelector('#output').addEventListener('click', outputIndex);
             }
-        </script> -->
-
-        <script>
-            function getOption() {
-                selectElement = document.querySelector('#employees_array');
-                outputIndex = selectElement.selectedIndex + 1;
-                //output = selectElement.options[selectElement.selectedIndex].value;
-                document.getElementById('output').innerHTML = outputIndex;
-            }
-        </script>
-
-        <!-- <script type="module">
-            // import {idArr, fullnameArr, nameArr, surnameArr, streetArr, numberArr, cityArr, phoneArr, fullAddressArr} from "./js/employees.js";
-            import * as employees from "./js/employees.js";
-
-                      console.log(employees.nameArr[64]);
-
         </script> -->
 
 

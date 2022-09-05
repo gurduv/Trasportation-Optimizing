@@ -105,7 +105,6 @@
                 // }
                 // getOption();
 
-          
 
             console.log(nameArr[64]);
             console.log(idArr[64]);
