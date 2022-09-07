@@ -13,6 +13,14 @@
     <link rel="stylesheet" href="css/index_styles.css">
     <link rel="stylesheet" href="css/employees_styles.css">
 
+
+    <script type="module" src="./js/employees.js"></script>
+                        
+    <script defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM&libraries=visualization&region=IL&language=he&callback">
+    </script>
+
+
     <title>Keshet Employee Management System</title>
 </head>
 
@@ -55,21 +63,18 @@
                 
                 <article class="text-center">
                     <h2>בחר שם עובד</h2>
-                    <!-- <form method="POST"> -->
-                        <select id="employees_array" name="employees" class="custom-select custom-select-lg mb-3" style="width: 200px">
-                            
-                        </select>
+                        <select id="employees_array" name="employees" class="custom-select custom-select-lg mb-3" style="width: 200px"></select>
                         <br>
-                        <!-- <input type="submit" name="submit" value="בצע" class="btn btn-primary mb-2" > -->
-                        <button onclick="getOption()" class="btn btn-primary mb-2">בצע</button>
-                        
-                    <!-- </form> -->
+                        <button id="doit" class="btn btn-primary mb-2">בצע</button>
+                        <script type="module" src="./js/mainEmployees.js"></script>
+
                     </article>
+
                     <p> הנבחר הוא:
                         <span id="output"></span>
                     </p>
 
-                <article>
+                    <article>
                                         <table>
                                             <tr>
                                                 <td>מספר עובד:</td>
@@ -146,39 +151,7 @@
             </p>
         </footer>
 
-        <script type="module" src="./js/employees.js"></script>
-
-        <script src="./js/firebasemap.js"></script>
-
-        <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM&libraries=visualization&region=IL&language=he&callback=initMap">
-        </script>
-
-          <script>
-            function getOption() {
-                selectElement = document.querySelector('#employees_array');
-                outputIndex = selectElement.selectedIndex + 1;
-                //output = selectElement.options[selectElement.selectedIndex].value;
-                document.getElementById('output').innerHTML = outputIndex;
-            }
-        </script>
-
-
-
-        <!-- <script type="module">
-            import {idArr, fullnameArr, nameArr, surnameArr, streetArr, numberArr, cityArr, phoneArr, fullAddressArr} from "./js/employees.js";
-
-            function getOption() {
-                selectElement = document.querySelector('#employees_array');
-                outputIndex = selectElement.selectedIndex + 1;
-                //output = selectElement.options[selectElement.selectedIndex].value;
-                //document.getElementById('output').innerHTML = outputIndex;
-                document.querySelector('#output').addEventListener('click', outputIndex);
-            }
-        </script> -->
-
-
         <!-- Optional JavaScript; choose one of the two! -->
-
         <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
