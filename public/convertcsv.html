@@ -19,8 +19,8 @@
                 "AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM";
         </script>
         
-        <link rel="stylesheet" type="text/css" href="/css/currentlocside.css" />
-        <script type="module" src="/js/currentloc.js"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="/css/currentlocside.css" /> -->
+        <!-- <script type="module" src="/js/currentloc.js"></script> -->
 
     <script type="text/javascript" src="./js/csv2json.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -78,7 +78,7 @@
                                 </div>  
 
                                 <div class="form-group">
-                                    <input type="submit" value="שליחת קובץ לשרת ההסעות" class="btn btn-primary" name="submit" onclick="sentoFirebase()">
+                                    <input type="submit" value="שליחת קובץ לשרת ההסעות" class="btn btn-primary" name="submit" onclick="sendtoFirebase()">
                                 </div>
 
                                 <div class="form-group">
@@ -129,13 +129,54 @@
                                         const execution = document.getElementById('execution');
                                         // const result = document.getElementById('result');
                                         execution.innerText = JSON.stringify(json, null, 2);
+                                        const jsonContent = JSON.stringify(json, null, 2);
+                                        console.log(jsonContent);
+
+                                        var myHeaders = new Headers();
+                                        myHeaders.append("Content-Type", "application/json");
+
+                                        // var raw = JSON.stringify(
+                                        //     {
+                                        //         "employees": [
+                                        //             {
+                                        //                 "name": "Jenette Caldwell",
+                                        //                 "salary": "2000",
+                                        //                 "age": "15"
+                                        //             },
+                                        //             {
+                                        //                 "name": "Jpppffenette Caldwell",
+                                        //                 "salary": "3000",
+                                        //                 "age": "25"
+                                        //             }
+                                        //         ]
+                                        //     }
+                                        // );
+
+                                        var requestOptions = {
+                                            method: 'PUT',
+                                            headers: myHeaders,
+                                            body: jsonContent,
+                                            redirect: 'follow'
+                                        };
+
+                                        fetch("https://transportation-optimizing-default-rtdb.europe-west1.firebasedatabase.app/employees.json", requestOptions)
+                                            .then(response => response.text())
+                                            .then(result => console.log(result))
+                                            .catch(error => console.log('error', error));
+
+
                                     }
                                     reader.onerror = function (evt) {
                                         csvcontent = "error reading file";
                                         // alert(csvcontent);
                                     }
                                 }
+
+                            
                             }
+
+
+
                         </script>
                     </article>
 
@@ -154,9 +195,9 @@
                         3. לחצו ״שליחת הקובץ״
                     </article>
 
-                    <article id="eventsArticle" class="text-center">
+                    <!-- <article id="eventsArticle" class="text-center">
                         <button class="btn btn-primary mb-2" onclick=" window.open('https://transportation-optimizing.web.app/currentlocation.html','_blank')">הצג מיקום נוכחי</button>                        
-                    </article>
+                    </article> -->
                 </aside>
             </div>
 
@@ -185,9 +226,9 @@
                  and consistent behavior across browsers, consider loading using Promises
                  with https://www.npmjs.com/package/@googlemaps/js-api-loader.
                 -->
-        <script
+        <!-- <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM&callback=initMap&v=weekly"
-            defer></script>
+            defer></script> -->
 
         <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

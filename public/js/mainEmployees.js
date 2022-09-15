@@ -14,8 +14,8 @@ var map = new google.maps.Map(document.getElementById('map'), {
       streetViewControl: false
     });
 
-
 function doItButtonClicked() {
+    
     var selectElement = document.querySelector('#employees_array');
     var outputIndex = selectElement.selectedIndex;
     document.getElementById('output').innerHTML = outputIndex;
@@ -39,7 +39,11 @@ function doItButtonClicked() {
         if (status == google.maps.GeocoderStatus.OK) {
             console.log(results[0].geometry.location.lat())
             console.log(results[0].geometry.location.lng())
+            console.log(results[0].place_id);
+
             document.getElementById('location').innerHTML = results[0].geometry.location;
+            document.getElementById('placeID').innerHTML = results[0].place_id;
+
             map.setCenter(results[0].geometry.location);
             map.setZoom(17);
             var marker = new google.maps.Marker({
@@ -51,8 +55,6 @@ function doItButtonClicked() {
             alert('Geocode was not successful for the following reason: ' + status);
         }
     });
-
-    
 }
 
 document.querySelector('#doit').addEventListener('click', doItButtonClicked);

@@ -46,6 +46,9 @@
     var childPhone;
     var childfullAddress;
 
+    var jumboAddressArr = new Array();
+
+
     // read data
     const dbRef = ref(database, 'employees/');
 
@@ -83,12 +86,34 @@
             
             });
 
-            var select = document.getElementById("employees_array");
+            const addressLen = fullAddressArr.length;
+            //console.log(addressLen);
+            const busNum= addressLen%10 + 1;
+            //console.log(busNum);
+
+
+            function sliceIntoChunks(fullAddressArr, chunkSize) {
+                for (let j=0; j<busNum; j++) {
+                    const res = [];
+                    for (let i = 0; i < fullAddressArr.length; i += chunkSize) {
+                        const chunk = fullAddressArr.slice(i, i + chunkSize);
+                        res.push(chunk);
+                    }
+                    jumboAddressArr.push(res);
+                    return jumboAddressArr;
+                }
+            }
+
+            //console.log(sliceIntoChunks(fullAddressArr, 10));
+            sliceIntoChunks(fullAddressArr, 10);
+            //console.log(jumboAddressArr);
+
+            var select = document.getElementById("bus_array");
             // fullnameArr - array with all worker names
             // employee name array to list function
             function addtoList() {
-                for (var i = 0; i < fullnameArr.length; i++) {
-                    var optn = fullnameArr[i];
+                for (var i = 0; i < busNum; i++) {
+                    var optn = "מיניבוס מס" + " " + [i+1];
                     var el = document.createElement("option");
                     el.textContent = optn;
                     el.value = optn;
@@ -112,5 +137,6 @@ export {    // Arrays for Database
     numberArr,
     cityArr,
     phoneArr,
-    fullAddressArr
+    fullAddressArr,
+    jumboAddressArr
 }

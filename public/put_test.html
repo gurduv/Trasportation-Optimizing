@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>put to db</title>
+    <script type="text/javascript">
+
+            function sendtoFirebase(){
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
+                var raw = JSON.stringify(
+                    {
+                    "employees" : [
+                    {
+                    "name": "Jenette Caldwell",
+                    "salary": "2000",
+                    "age": "15"
+                    },
+                    {
+                    "name": "Jpppffenette Caldwell",
+                    "salary": "3000",
+                    "age": "25"
+                    }
+                ]
+                }
+                );
+
+                var requestOptions = {
+                    method: 'PUT',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+
+                fetch("https://transportation-optimizing-default-rtdb.europe-west1.firebasedatabase.app/.json", requestOptions)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+            }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="form-group">
+        <input type="submit" value="שליחת קובץ לשרת ההסעות" name="submit" onclick="sendtoFirebase()">
+    </div>
+
+
+</body>
+
+</html>

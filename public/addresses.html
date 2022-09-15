@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/employees_styles.css">
 
 
-    <script type="module" src="./js/employees.js"></script>
+    <script type="module" src="./js/addresses.js"></script>
                         
     <script defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM&libraries=visualization&region=IL&language=he&callback">
@@ -55,82 +55,96 @@
 
         <main class="text-right">
             <h1 class="font-weight-bold text-center head1">
-                מידע על העובדים</h1>
+                מסלולי הסעות למשמרות</h1>
 
 
             <div class="d-flex flex-md-row flex-column">
                 <section class="col text-justify">
                 
                 <article class="text-center">
-                    <h2>בחר שם עובד</h2>
-                        <select id="employees_array" name="employees" class="custom-select custom-select-lg mb-3" style="width: 200px"></select>
+                    <h2>בחר הסעה</h2>
+                        <select id="bus_array" name="bus" class="custom-select custom-select-lg mb-3" style="width: 200px"></select>
                         <br>
                         <button id="doit" class="btn btn-primary mb-2">בצע</button>
-                        <script type="module" src="./js/mainEmployees.js"></script>
+                        <script type="module" src="./js/mainAddresses.js"></script>
 
                     </article>
 
-                    <p> הנבחר הוא:
-                        <span id="output"></span>
-                    </p>
+                    <p> הכתובות הן:                    </p>
 
                     <article>
                                         <table>
+                                            <th>מס׳</th>
+                                            <th>כתובת</th>
                                             <tr>
-                                                <td>מספר עובד:</td>
-                                                <td id="worker_id"></td>
+                                                <td>1</td>
+                                                <td id="address1"></td>
                                             </tr>
                                             <tr>
-                                                <td>שם פרטי: </td>
-                                                <td id="name"></td>
+                                                <td>2</td>
+                                                <td id="address2"></td>
+
                                             </tr>
                                             <tr>
-                                                <td>שם משפחה: </td>
-                                                <td id="surname"></td>
+                                                <td>3</td>
+                                                <td id="address3"></td>
+
                                             </tr>
                                             <tr>
-                                                <td>רחוב: </td>
-                                                <td id="street_name"></td>
+                                                <td>4</td>
+                                                <td id="address4"></td>
+
                                             </tr>
                                             <tr>
-                                                <td>מספר: </td>
-                                                <td id="street_code"></td>
+                                                <td>5</td>
+                                                <td id="address5"></td>
+
                                             </tr>
                                             <tr>
-                                                <td>עיר: </td>
-                                                <td id="city_name"></td>
+                                                <td>6</td>
+                                                <td id="address6"></td>
+
                                             </tr>
                                             <tr>
-                                                <td>טלפון: </td>
-                                                <td id="tel"></td>
+                                                <td>7</td>
+                                                <td id="address7"></td>
+
                                             </tr>
+                                            <tr>
+                                                <td>8</td>
+                                                <td id="address8"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>9</td>
+                                                <td id="address9"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>10</td>
+                                                <td id="address10"></td>
+
+                                            </tr>
+                                            
                                         </table>
 
                 </article>
 
                 <article>
-                    <h5>תוצאות</h5>
-                    שם מלא:
-                    <p id="resultFullname"></p>
-                    כתובת מלאה:
-                    <p id="resultAddress"></p>
-                    <p id="fullList"></p>
-                    מיקום במפה:
-                    <p id="location"></p>
-                    שם מיקום ב-Google Maps:
-                    <p id="placeID"></p>
-
-                    <!-- map with employees address -->
-                    <div id="map"></div>
-
+                    <h5>קישור למסלול הנסיעה:</h5>
+                    <a id="resultroute" target="_blank">לחץ כאן</a>
+             
                 </article>
 
                 </section>
 
                 <aside class="col-2-lg">
                 <article id="eventsArticle">
-            יש לבחור עובד מהרשימה<br>
-            הפרטים שיוצגו כוללים <br> את הנתונים האישיים       
+            יש לבחור מיניבוס מהרשימה<br>
+            הפרטים שיוצגו כוללים <br>
+             הכתובות במסלול. <br>
+             לחיצה על הקישור בתחתית תפתח מפה<br>
+             כולל מסלול אפטילי למיניבוס       
             </article>
                 </aside>
             </div>
