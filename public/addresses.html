@@ -15,7 +15,7 @@
 
 
     <script type="module" src="./js/addresses.js"></script>
-                        
+
     <script defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM&libraries=visualization&region=IL&language=he&callback">
     </script>
@@ -46,9 +46,9 @@
                     <a class="nav-link" href="index.html">בית</a>
                     <a class="nav-link" href="shifts.html">משמרות</a>
                     <a class="nav-link" href="tasks.html">משימות</a>
-                    <a class="nav-link active" href="employees.html">עובדים <span class="sr-only">(current)</span></a>
-                    <a class="nav-link" href="guides.html">הדרכות</a>
+                    <a class="nav-link" href="employees.html">עובדים</a>
                     <a class="nav-link" href="convertcsv.html">הסעות</a>
+                    <a class="nav-link" href="guides.html">הדרכות</a>
                 </div>
             </div>
         </nav>
@@ -65,76 +65,107 @@
                     <h2>בחר הסעה</h2>
                         <select id="bus_array" name="bus" class="custom-select custom-select-lg mb-3" style="width: 200px"></select>
                         <br>
-                        <button id="doit" class="btn btn-primary mb-2">בצע</button>
+                        <button id="doit" c>בצע</button>
                         <script type="module" src="./js/mainAddresses.js"></script>
 
-                    </article>
+                </article>
 
-                    <p> הכתובות הן:                    </p>
+                <article class="text-center">
+                    <h5>קישור למסלול הנסיעה:</h5>
+                    <h3><a id="resultroute" target="_blank">לחץ כאן</a></h3>
+                </article>
+
+
+                    <p> הכתובות הן: </p>
 
                     <article>
-                                        <table>
+                        <div id="busTable">
+                                        <table class="table table-striped table-hover">
                                             <th>מס׳</th>
                                             <th>כתובת</th>
+                                            <th>שם</th>
+                                            <th>טלפון</th>
+                                            <th>ניווט</th>
+
                                             <tr>
                                                 <td>1</td>
                                                 <td id="address1"></td>
+                                                <td id="name1"></td>
+                                                <td id="phone1"></td>
+                                                <td><a id="nav1">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>2</td>
                                                 <td id="address2"></td>
-
+                                                <td id="name2"></td>
+                                                <td id="phone2"></td>
+                                                <td><a id="nav2">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>3</td>
                                                 <td id="address3"></td>
-
+                                                <td id="name3"></td>
+                                                <td id="phone3"></td>
+                                                <td><a id="nav3">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>4</td>
                                                 <td id="address4"></td>
-
+                                                <td id="name4"></td>
+                                                <td id="phone4"></td>
+                                                <td><a id="nav4">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>5</td>
                                                 <td id="address5"></td>
-
+                                                <td id="name5"></td>
+                                                <td id="phone5"></td>
+                                                <td><a id="nav5">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>6</td>
                                                 <td id="address6"></td>
-
+                                                <td id="name6"></td>
+                                                <td id="phone6"></td>
+                                                <td><a id="nav6">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>7</td>
                                                 <td id="address7"></td>
-
+                                                <td id="name7"></td>
+                                                <td id="phone7"></td>
+                                                <td><a id="nav7">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>8</td>
                                                 <td id="address8"></td>
-
+                                                <td id="name8"></td>
+                                                <td id="phone8"></td>
+                                                <td><a id="nav8">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>9</td>
                                                 <td id="address9"></td>
-
+                                                <td id="name9"></td>
+                                                <td id="phone9"></td>
+                                                <td><a id="nav9">נווט</a></td>
                                             </tr>
                                             <tr>
                                                 <td>10</td>
                                                 <td id="address10"></td>
-
+                                                <td id="name10"></td>
+                                                <td id="phone10"></td>
+                                                <td><a id="nav10">נווט</a></td>
                                             </tr>
                                             
                                         </table>
-
+                    </div>    
+                    <br>
+                    <div class="text-center">
+                            <input type="button" class="btn btn-primary mb-2" value="הדפס" onclick="printDiv()">
+                    </div>
                 </article>
 
-                <article>
-                    <h5>קישור למסלול הנסיעה:</h5>
-                    <a id="resultroute" target="_blank">לחץ כאן</a>
-             
-                </article>
 
                 </section>
 
@@ -144,8 +175,22 @@
             הפרטים שיוצגו כוללים <br>
              הכתובות במסלול. <br>
              לחיצה על הקישור בתחתית תפתח מפה<br>
-             כולל מסלול אפטילי למיניבוס       
+             כולל מסלול אופטימלי למיניבוס       
             </article>
+
+            <article id="eventsArticle">
+                בכל מיניבוס 10 נוסעים מקסימום<br>
+                לא כולל הנהג <br>
+            </article>
+
+            <article id="eventsArticle">
+                המסלול מתחיל בתחנת מוצא קבועה<br>
+                חברת ההסעות <br>
+                ומסתיים תמיד בסניף גבעת השלושה <br>
+                            של עמותת קשת <br>
+
+            </article>
+
                 </aside>
             </div>
 
@@ -168,6 +213,21 @@
             </p>
         </footer>
 
+
+            <script>
+                function printDiv() {
+                    var divContents = document.getElementById("busTable").innerHTML;
+                    var a = window.open('', '', 'height=500, width=500');
+                    a.document.write('<html>');
+                    a.document.write('<body lang="he" dir="rtl"> <h1>רשימת הכתובות: <br>');
+                    a.document.write(divContents);
+                    a.document.write('</body></html>');
+                    a.document.close();
+                    a.print();
+                }
+            </script>
+
+
         <!-- Optional JavaScript; choose one of the two! -->
         <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -176,6 +236,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
             crossorigin="anonymous"></script>
+
+
 
     </div>
 </body>

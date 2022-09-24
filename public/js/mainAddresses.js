@@ -1,19 +1,5 @@
 import {idArr, fullnameArr, nameArr, surnameArr, streetArr, numberArr, cityArr, phoneArr, fullAddressArr, jumboAddressArr} from "./addresses.js";
 
-// var map = new google.maps.Map(document.getElementById('map'), {
-//       center: {lat: 32, lng: 35},
-//       zoom: 9,
-//       styles: [{
-//         featureType: 'poi',
-//         stylers: [{ visibility: 'off' }]  // Turn off points of interest.
-//       }, {
-//         featureType: 'transit.station',
-//         stylers: [{ visibility: 'off' }]  // Turn off bus stations, train stations, etc.
-//       }],
-//       disableDoubleClickZoom: true,
-//       streetViewControl: false
-//     });
-
 
 function doItButtonClicked() {
     
@@ -21,29 +7,52 @@ function doItButtonClicked() {
     var outputIndex = selectElement.selectedIndex;
     //document.getElementById('output').innerHTML = outputIndex;
 
+    // clear table before adding new addresses
+    for (var i = 0; i <10; i++) {
+                var j=i+1;
+                document.getElementById('address'+j).innerHTML = "";
+                document.getElementById('name'+j).innerHTML = "";
+                document.getElementById('phone'+j).innerHTML = "";
+    }
 
-
-    //console.log(jumboAddressArr[0][outputIndex].length);
+    console.log(jumboAddressArr[0][outputIndex].length);
     for (let i = 0; i < jumboAddressArr[0][outputIndex].length; i ++) {
         var j=i+1;
         document.getElementById('address'+j).innerHTML = jumboAddressArr[0][outputIndex][i];
-        //console.log(jumboAddressArr[0][outputIndex][i]);
+        console.log(jumboAddressArr[0][outputIndex][i]);
+
+        for (let k=0; k < idArr.length; k++) {
+            
+            if (jumboAddressArr[0][outputIndex][i] == fullAddressArr[k]) {
+                //console.log("k is " + fullAddressArr[k] + k);
+                //console.log("k name is " + fullnameArr[k] + k);
+                document.getElementById('name'+j).innerHTML = fullnameArr[k];
+                document.getElementById('phone'+j).innerHTML = phoneArr[k];
+            }
+        }
     }
 
     var geocoder = new google.maps.Geocoder();
     //placeidArr = [];
     var placeidArr = new Array();
     var urlString;
-
+    
     for (let i = 0; i < jumboAddressArr[0][outputIndex].length; i ++) {
+        
         setTimeout( function () {
+                var j=i+1;
 
         var address = jumboAddressArr[0][outputIndex][i];
         geocoder.geocode( { 'address': address}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 //console.log(results[0].geometry.location.lat())
                 //console.log(results[0].geometry.location.lng())
-                //console.log(results[0].place_id);
+                console.log(results[0].place_id);
+                var navURL = "https://www.google.com/maps/dir/?api=1&destination=" + jumboAddressArr[0][outputIndex][i] + "&destination_place_id=" + results[0].place_id + "&travelmode=driving";
+                console.log(navURL);
+
+                var nav = document.getElementById('nav'+j);
+                nav.href = navURL;
 
                 placeidArr.push(results[0].place_id);
                 //document.getElementById('location').innerHTML = results[0].geometry.location;
@@ -72,34 +81,10 @@ function doItButtonClicked() {
             var url = "https://transportation-optimizing.web.app/optRoute/index.html?waypoint=" + urlString;
             console.log(url);
                 
-                // (C) WHATEVER COMES NEXT...
-                // REDIRECT OR AJAX CALL OR FETCH
-                // window.location.href = url;
                 var a = document.getElementById('resultroute');
                 a.href = url;
-
-
-    },3500);
-
-    //console.log(urlString);
-
-    // setTimeout( function () {
-    //             // (A) URL SEARCH PARAMS OBJECT TO QUICKLY BUILD QUERY STRING
-    //             var query = new URLSearchParams({
-    //             waypoint : placeidArr[3], 
-    //             });
-    //             query.append("KEY", "VALUE"); // To append more data
                 
-    //             // (B) CONVERT TO STRING, APPEND TO URL
-    //             var url = "http://127.0.0.1:5500/public/optRoute/index.html?" + query.toString();
-    //             console.log(url);
-                
-    //             // (C) WHATEVER COMES NEXT...
-    //             // REDIRECT OR AJAX CALL OR FETCH
-    //             // window.location.href = url;
-    // },2000);
-
-
+    },1500);
 
 
 }

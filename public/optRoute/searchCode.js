@@ -1,10 +1,3 @@
-//https://developers.google.com/maps/documentation/javascript/reference?hl=en
-
-//things to add:
-//add an info button that displays the address when it's hovered over
-//or when the location name is hovered over
-//make waypoints draggable
-//check for dupplicate waypoints
 
 var map; // var for maps element
 var markers = []; //store the location markers we add tinyurl.com/gmproj5
@@ -15,7 +8,6 @@ var start;         // start place id
 var end;           // end place id
 var waypoint = []; // array for holding place id's objects of each travel stopping point (between start and stop)
 
-// https://developers.google.com/maps/documentation/javascript/directions#waypoint-limits
 var MAX_WAYPOINTS = 25; // max number of waypoints allowed by API (25 max as of Jan 27, 2020)
 
 document.getElementById("loc2").placeholder = "Enter up to " + MAX_WAYPOINTS + " waypoints"; // placeholder text for input filed for waypoints
@@ -24,9 +16,8 @@ document.getElementById("loc2").placeholder = "Enter up to " + MAX_WAYPOINTS + "
 function initMap() {
     //create map object
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 32, lng: 35}, //initially centered in the middle of the Israel, quickly replaced with current location
+        center: {lat: 32, lng: 35},
         zoom: 9
-        //mapTypeId: google.maps.MapTypeId.ROADMAP ??? dont need this
     });
     
     
@@ -41,8 +32,6 @@ function initMap() {
     }
     
     
-    //DIRECTIONS based on directions-panel.html from tinyurl.com/gmproj2
-    //automatically updated when a new route is set
     directionsService = new google.maps.DirectionsService
     directionsDisplay = new google.maps.DirectionsRenderer(); // var calling the directions display
     directionsDisplay.setMap(map); //shows the route on the map
@@ -50,15 +39,10 @@ function initMap() {
     
     
     
-    // Create the searchBoxes and link them to the UI element. from: tinyurl.com/gmproj1
-    // this are google managed elements for search - need to find out how to replace with arrays
-    //local1=loc1.innerHTML;
-    //console.log(loc1.innerHTML);
     var searchBox0 = new google.maps.places.SearchBox(document.getElementById('loc1'));
     var searchBox1 = new google.maps.places.SearchBox(document.getElementById('loc2'));
     var searchBox2 = new google.maps.places.SearchBox(document.getElementById('loc3'));
     
-    // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function () {
         searchBox0.setBounds(map.getBounds());
         searchBox1.setBounds(map.getBounds());    
@@ -66,39 +50,29 @@ function initMap() {
     });
             
     
-    //if searchBox0 is used
     searchBox0.addListener('places_changed', function () {
-        document.getElementById("loc1").value = ""; //clear searchbox
+        document.getElementById("loc1").value = "";
         addPoint(searchBox0.getPlaces()[0], 'start');
     });
     
-    //if searchBox1 is used
     searchBox1.addListener('places_changed', function () {
         document.getElementById("loc2").value = "";
         addPoint(searchBox1.getPlaces()[0], 'waypoint');
     });
     
-    //if searchBox2 is used
     searchBox2.addListener('places_changed', function () {
         addPoint(searchBox2.getPlaces()[0], 'end');
     });
     toggleSearchBoxes(true);
     
-    // now that google APIs are loaded:
-    //const placesService = new google.maps.places.PlacesService(map);
-    // converts address to longitude and latitude coordinates
     const geocoder = new google.maps.Geocoder();
     loadFromUrl(geocoder);
     
-    //place the search boxes on the top left of the map
-//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('loc1'));
-//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('loc2'));
-//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('loc3'));
 }
 
 
 function calcRoute(routeStart) {
-    updateUrl(); // update URL (because start/end/waypoint state just changed)
+    updateUrl();
     console.log(start);
     console.log(end);
     console.log(waypoint);
@@ -111,26 +85,24 @@ function calcRoute(routeStart) {
             document.getElementById("ham").src='images/grey-hamburger.png';
         }
         
-        directionsDisplay.setMap(null); //in case the map was previously drawn
+        directionsDisplay.setMap(null);
         for(var i=0; i<markers.length; i++)
             if(typeof markers[i] != 'undefined')
-                markers[i].setMap(map); //redraw the points that were previously turned off
-        return; //don't calculate route if all needed points aren't set
+                markers[i].setMap(map);
+        return;
     }
 //    printLocations();
     directionsDisplay.setMap(map);
     const actualWaypoints = waypoint.map(w => ({
-        location: w.geometry.location, //latlng object
+        location: w.geometry.location,
         stopover: true
     }));
     
-    // console.log("***calculating route");
-    // https://developers.google.com/maps/documentation/javascript/directions
     const request = {
-        origin: start.geometry.location, //latlng object
+        origin: start.geometry.location,
         destination: end.geometry.location,
         waypoints: actualWaypoints,
-        optimizeWaypoints: true, ///VERY IMPORTANT!!! WOW example: tinyurl.com/gmproj6
+        optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING
     }
     
@@ -148,32 +120,6 @@ function calcRoute(routeStart) {
     }
 
 }
-
-
-// function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates a new marker if it doesn't exist
-    
-//     if(n==0)
-//         var link = "http://www.googlemapsmarkers.com/v1/00FF00";
-//     if(n==1)
-//         var link = "http://www.googlemapsmarkers.com/v1/FF0000";
-//     if(n>1)
-//         var link = "http://www.googlemapsmarkers.com/v1/FFA500";
-    
-//     if(typeof markers[n] == 'undefined') { //if it doesn't exist
-//         markers[n] = new google.maps.Marker({ //create new marker
-//             position: plc.geometry.location, //a latlng object
-//             map: map,
-// //            label: n.toString(),
-//             animation: google.maps.Animation.DROP,
-//             icon: link,
-//             title: n.toString(),
-//             draggable: false //make true later if the loc is retrieved from the marker
-//         });
-//     }
-//     else {
-//         markers[n].setPosition(plc.geometry.location);
-//     }    
-// }
 
 
 function clearMarkers() {
@@ -197,24 +143,14 @@ function toggleSearchBoxes(enabled) {
   }
 }
 
-/**
- * replace waypoints, start, stop using data in URL
- * TODO: set a window.onpopstate listener as well to call this?
- */
 async function loadFromUrl(geocoder) {
     console.log('loading from url geocoder');
-    toggleSearchBoxes(false); // disable searchboxes
+    toggleSearchBoxes(false);
     const queryParams = new URLSearchParams(window.location.search);
     let request;
 
-    // const startPlaceId = queryParams.get('start'); //place id is a code for a location (not long/lat)
-    // const endPlaceId = queryParams.get('end');
-    // const waypointIds = queryParams.get('waypoint') ? queryParams.get('waypoint').split(',') : [];
-
-
-    const startPlaceId = 'ChIJ6WORatNIHBURfP-j6_WGRtk'; //place id is a code for a location (not long/lat)
-    const endPlaceId = 'ChIJiR5vQZ_XAhURlKmgH-vH3Sk';
-    // const waypointIds = ["ChIJDwHxaiq4AhURNLqn5ZfAVGk", "ChIJj-W_kgW3AhURV_lYF8v4re4", "ChIJy8DRXfo2HBURRqxzjOSXrzA"];
+    const startPlaceId = 'ChIJ41SEZPhJHRUR7snt28fabB0'; 
+    const endPlaceId = 'ChIJwyldiQg2HRURx-FEiADtZPA';
     const waypointIds = queryParams.get('waypoint') ? queryParams.get('waypoint').split(',') : [];
 
 
@@ -249,17 +185,11 @@ async function loadFromUrl(geocoder) {
       calcRoute();
     }
 
-    toggleSearchBoxes(true); // enable searchboxes
+    toggleSearchBoxes(true);
     
 }
 
   
-/**
- * given a google placeId, convert it to a place object and pass it to the provided callback.
- * returns a promise.
- * based on https://developers.google.com/maps/documentation/javascript/examples/geocoding-place-id#maps_geocoding_place_id-javascript
- *   and https://developers.google.com/maps/documentation/javascript/geocoding
- */
 function expandPlaceId(geocoder, placeId, callback) {
     return geocoder
       .geocode({ placeId: placeId })
@@ -273,23 +203,9 @@ function expandPlaceId(geocoder, placeId, callback) {
       })
       .catch((e) => console.error("Geocoder failed due to: " + e));
 
-    // note that the result won't have the 'name' field
-    // we could lookup the 'name' for this place with an additional API call, but not sure its worth it:
-    // or we could store the lat/lng in the URL instead so we can just query the places API below (skipping the geocode step)
-    /*
-    // https://developers.google.com/maps/documentation/javascript/reference/places-service#PlacesService.findPlaceFromQuery
-    request = { query: queryParams.get('start'), fields: ['geometry.location', 'name', 'formatted_address'] };
-    placesService.findPlaceFromQuery(request, function(result, status) {
-        console.log('result = '); console.log(result);
-        console.log('status='); console.log(status);
-    });
-    */
 }
 
 
-/**
- * update URL to store waypoints/start/stop locations.
- */
 function updateUrl() {
     console.log('updating url');
     let params = { waypoint: waypoint.map(p => p.place_id) };
@@ -341,7 +257,7 @@ function addPoint(place, pointType, computeDirections=true) {
           //setMarker(i+2, waypoint[i]);
           document.getElementById("waypointsInfo").innerHTML += "<li id='point" + i + "'>" + "<t class='tooltip' title='" + place['formatted_address'] + "'>" +
           placeName +
-              "</t><a href='javascript:void(0)' onclick='deletePoint(this)'><img src='images/delete.png' height='10' hspace='10'></a>\
+              "</t><a href='javascript:void(0)' onclick='deletePoint(this)'></a>\
               <a href='javascript:void(0)'>"; // [X]
 //            console.log("waypoint=" + waypoint + '\n');
           calcRoute();
