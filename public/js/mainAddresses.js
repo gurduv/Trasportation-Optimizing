@@ -15,22 +15,6 @@ function doItButtonClicked() {
                 document.getElementById('phone'+j).innerHTML = "";
     }
 
-    console.log(jumboAddressArr[0][outputIndex].length);
-    for (let i = 0; i < jumboAddressArr[0][outputIndex].length; i ++) {
-        var j=i+1;
-        document.getElementById('address'+j).innerHTML = jumboAddressArr[0][outputIndex][i];
-        console.log(jumboAddressArr[0][outputIndex][i]);
-
-        for (let k=0; k < idArr.length; k++) {
-            
-            if (jumboAddressArr[0][outputIndex][i] == fullAddressArr[k]) {
-                //console.log("k is " + fullAddressArr[k] + k);
-                //console.log("k name is " + fullnameArr[k] + k);
-                document.getElementById('name'+j).innerHTML = fullnameArr[k];
-                document.getElementById('phone'+j).innerHTML = phoneArr[k];
-            }
-        }
-    }
 
     var geocoder = new google.maps.Geocoder();
     //placeidArr = [];
@@ -69,6 +53,47 @@ function doItButtonClicked() {
     
     console.log(placeidArr);
 
+
+    console.log(jumboAddressArr[0][outputIndex].length);
+    for (let i = 0; i < jumboAddressArr[0][outputIndex].length; i ++) {
+        var j=i+1;
+        document.getElementById('address'+j).innerHTML = jumboAddressArr[0][outputIndex][i];
+        console.log(jumboAddressArr[0][outputIndex][i]);
+
+        for (let k=0; k < idArr.length; k++) {
+            
+            if (jumboAddressArr[0][outputIndex][i] == fullAddressArr[k]) {
+                //console.log("k is " + fullAddressArr[k] + k);
+                //console.log("k name is " + fullnameArr[k] + k);
+                document.getElementById('name'+j).innerHTML = fullnameArr[k];
+                document.getElementById('phone'+j).innerHTML = phoneArr[k];
+            }
+        }
+    }
+
+
+    //try to optimize arrays of addresses - placeidArr
+    // ??
+    var optimizeWaypoints='';
+            setTimeout( function () {
+            console.log(placeidArr.length);
+            for (var i = 1; i < placeidArr.length; i++) {
+                optimizeWaypoints += placeidArr[i-1] + "%7Cplace_id%3A";
+            }
+            optimizeWaypoints = optimizeWaypoints.concat(placeidArr[placeidArr.length-1]);
+            console.log(optimizeWaypoints);
+                
+            var urlOptimize = "https://maps.googleapis.com/maps/api/directions/json?destination=place_id%3AChIJwyldiQg2HRURx-FEiADtZPA&origin=place_id%3AChIJ41SEZPhJHRUR7snt28fabB0&waypoints=optimize%3Atrue%7Cplace_id%3A" + optimizeWaypoints + "&key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM";
+            console.log(urlOptimize);
+
+            fetch(urlOptimize, { mode: 'no-cors'});
+
+                
+
+    },2500);
+
+
+
     var urlString='';
         setTimeout( function () {
             console.log(placeidArr.length);
@@ -81,9 +106,11 @@ function doItButtonClicked() {
             var url = "https://transportation-optimizing.web.app/optRoute/index.html?waypoint=" + urlString;
             console.log(url);
                 
-                var a = document.getElementById('resultroute');
-                a.href = url;
-                
+            // var a = document.getElementById('resultroute');
+            // a.href = url;
+            document.getElementById("resultroute").src = url;
+
+
     },1500);
 
 
