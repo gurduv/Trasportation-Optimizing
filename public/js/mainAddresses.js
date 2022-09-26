@@ -108,7 +108,10 @@ function doItButtonClicked() {
                 
             // var a = document.getElementById('resultroute');
             // a.href = url;
+            document.getElementById('mapFrame').style.height = "600px";
+            document.getElementById('resultroute').style.height = "600px";
             document.getElementById("resultroute").src = url;
+
 
 
     },1500);
