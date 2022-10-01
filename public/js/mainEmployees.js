@@ -48,8 +48,17 @@ function doItButtonClicked() {
             map.setZoom(17);
             var marker = new google.maps.Marker({
                 map: map,
-                position: results[0].geometry.location
+                position: results[0].geometry.location,
+                animation: google.maps.Animation.DROP,
+                clickable: true,
+                title: fullAddressArr[outputIndex] + "\nלחץ לניווט ליעד",
+                draggable: false,
+                url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + results[0].place_id + "&travelmode=driving"
             });
+
+        google.maps.event.addListener(marker, "click", () => {
+        window.open(marker.url, '_blank');
+        });
 
         } else {
             alert('Geocode was not successful for the following reason: ' + status);

@@ -2,12 +2,17 @@
 <html>
     
   <head>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+            integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+
     <title>Keshet Employee Management System</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
 
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="css/index_styles.css">
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="../css/index_styles.css">
 
     <style>
         html, body {
@@ -141,16 +146,15 @@
     <br><br>
     </article>
       
-      <div id="placeInfo" style="padding: 15px">
-          <h3 style="color:black;" class="" id="loading-info">Loading...</h3>
+      <div id="placeInfo" class="d-none" style="padding: 15px">
+          <h3 style="color:black;" class="" id="loading-info">טוען נתונים...</h3>
 
           <h3 style="color:green">התחלת המסלול<br>(חברת ההסעות):</h3>
           <div class="searchInput"> 
                 <p id="loc1"></p>
-
           </div>
 
-          <t id="startInfo" class="tooltip"></t>
+           <t id="startInfo" class="tooltip"></t> 
           
           <h3 style="color:orange">תחנות איסוף:</h3>
           <div class="searchInput">
@@ -159,22 +163,22 @@
           <t>
                 <ul id="waypointsInfo">
                 </ul>
-          </t>
+          </t> 
 
           <h3 style="color:red">סיום המסלול<br>(עמותת קשת סניף גבעת השלושה):</h3>
           <div class="searchInput">
               <p id="loc3"></p>
 
           </div>
-          <t id="endInfo" class="tooltip"></t>
-          
+           <t id="endInfo" class="tooltip"></t> 
       </div>
       
-      
+    <div id="map"></div>
+
     <img id="ham" src="images/grey-hamburger.png" height="20">
+    
     <div id="directionsPanel"></div>
         
-    <div id="map"></div>
       
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="searchCode.js"></script>

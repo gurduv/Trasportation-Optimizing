@@ -149,11 +149,11 @@
                                             .then(result => console.log(result))
                                             .catch(error => console.log('error', error));
 
-
+                                        alert("קובץ הועלה בהצלחה");
                                     }
                                     reader.onerror = function (evt) {
-                                        csvcontent = "error reading file";
-                                        // alert(csvcontent);
+                                        csvcontent = "לא ניתן לקרוא את הקובץ, נסו שנית";
+                                        alert(csvcontent);
                                     }
                                 }
 

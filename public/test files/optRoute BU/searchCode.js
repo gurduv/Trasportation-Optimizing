@@ -33,10 +33,7 @@ function initMap() {
     
     
     directionsService = new google.maps.DirectionsService
-
-    var opts={markerOptions: {visible:false}};
-    directionsDisplay = new google.maps.DirectionsRenderer(opts); // var calling the directions display
-    
+    directionsDisplay = new google.maps.DirectionsRenderer(); // var calling the directions display
     directionsDisplay.setMap(map); //shows the route on the map
     directionsDisplay.setPanel(document.getElementById('directionsPanel')); // sends the route to the directionspanel
     
@@ -106,7 +103,7 @@ function calcRoute(routeStart) {
     
     directionsService.route(request, function(result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
-            //clearMarkers();
+            clearMarkers();
             directionsDisplay.setDirections(result);
         }
     });
@@ -118,95 +115,6 @@ function calcRoute(routeStart) {
     }
 
 }
-
-function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates a new marker if it doesn't exist
-    
-    if(n==0) {
-        var link = "images/markerStart.png";
-        var labelText = "התחלה";
-        if(typeof markers[n] == 'undefined') { //if it doesn't exist
-        markers[n] = new google.maps.Marker({ //create new marker
-            position: plc.geometry.location, //a latlng object
-            map: map,
-            label: { text:labelText,
-                                color: "yellow",
-                                className: "labelText",
-                                fontWeight: "bold",
-                    },
-            animation: google.maps.Animation.DROP,
-            icon: link,
-            clickable: true,
-            title: plc.formatted_address + "\nClick to Navigate",
-            draggable: false, //make true later if the loc is retrieved from the marker
-            url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
-        });
-        console.log(markers[n].label);
-
-            google.maps.event.addListener(markers[n], "click", () => {
-            window.open(markers[n].url, '_blank');
-        });
-
-    }
-    else {
-        markers[n].setPosition(plc.geometry.location);
-    }
-    }
-    if(n==1) {
-        var link = "images/markerEnd.png";
-        var labelText = "סיום";
-        if(typeof markers[n] == 'undefined') { //if it doesn't exist
-        markers[n] = new google.maps.Marker({ //create new marker
-            position: plc.geometry.location, //a latlng object
-            map: map,
-            label: { text:labelText,
-                                color: "yellow",
-                                className: "labelText",
-                                fontWeight: "bold",
-                    },
-            animation: google.maps.Animation.DROP,
-            icon: link,
-            clickable: true,
-            title: plc.formatted_address + "\nלחץ לניווט ליעד",
-            draggable: false, //make true later if the loc is retrieved from the marker
-            url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
-        });
-        console.log(markers[n].label);
-
-            google.maps.event.addListener(markers[n], "click", () => {
-            window.open(markers[n].url, '_blank');
-        });
-
-    }
-    else {
-        markers[n].setPosition(plc.geometry.location);
-    }
-    }
-    if(n>1) {
-        var link = "images/marker.png";
-        if(typeof markers[n] == 'undefined') { //if it doesn't exist
-        markers[n] = new google.maps.Marker({ //create new marker
-            position: plc.geometry.location, //a latlng object
-            map: map,
-            animation: google.maps.Animation.DROP,
-            icon: link,
-            clickable: true,
-            title: plc.formatted_address + "\nClick to Navigate",
-            draggable: false, //make true later if the loc is retrieved from the marker
-            url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
-        });
-        console.log(markers[n].label);
-
-            google.maps.event.addListener(markers[n], "click", () => {
-            window.open(markers[n].url, '_blank');
-        });
-
-    }
-    else {
-        markers[n].setPosition(plc.geometry.location);
-    }
-    }
-}
-
 
 function clearMarkers() {
     for(var i=0; i<markers.length; i++)
@@ -316,7 +224,7 @@ function addPoint(place, pointType, computeDirections=true) {
     if (pointType === 'start') {
         start = place; //add the first place from the search
         //console.log("start place = "); console.log(start);
-        setMarker(0, start);
+        //setMarker(0, start);
         document.getElementById("startInfo").innerHTML = "<br>" + placeName; //shortened name
         document.getElementById("startInfo").title = start['formatted_address'];
         //document.getElementById("startInfo").innerHTML = "<br>" + start['formatted_address'];
@@ -325,7 +233,7 @@ function addPoint(place, pointType, computeDirections=true) {
     } else if (pointType === 'end') {
         end = place;
         document.getElementById("loc3").value = "";
-        setMarker(1, end);
+        //setMarker(1, end);
         document.getElementById("endInfo").innerHTML = "<br>" + placeName;
         document.getElementById("endInfo").title = end['formatted_address'];
         calcRoute();
@@ -338,7 +246,7 @@ function addPoint(place, pointType, computeDirections=true) {
           waypoint.push(place); // add place to end of array
           //console.log('added new waypoint, markers = '); console.log(markers);
           const i = waypoint.length-1;
-          setMarker(i+2, waypoint[i]);
+          //setMarker(i+2, waypoint[i]);
           document.getElementById("waypointsInfo").innerHTML += "<li id='point" + i + "'>" + "<t class='tooltip' title='" + place['formatted_address'] + "'>" +
           placeName +
               "</t><a href='javascript:void(0)' onclick='deletePoint(this)'></a>\

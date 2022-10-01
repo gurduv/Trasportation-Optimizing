@@ -87,10 +87,18 @@
             });
 
             const addressLen = fullAddressArr.length;
-            //console.log(addressLen);
-            const busNum= addressLen%10 + 1;
-            //console.log(busNum);
+            console.log(addressLen);
 
+            var busNum="";
+
+            if (addressLen%10 == 0) {
+                 busNum = addressLen/10;
+            } else {
+                const busNumTMP = addressLen/10;
+                busNum = Math.ceil(busNumTMP);
+            }
+
+            console.log("Number of Busses = "+ busNum);
 
             function sliceIntoChunks(fullAddressArr, chunkSize) {
                 for (let j=0; j<busNum; j++) {

@@ -48,7 +48,7 @@ function doItButtonClicked() {
                 console.log('Cannot find Geocode for:' + address);
             }
         });
-         },1000);
+         },2500);
     }
     
     console.log(placeidArr);
@@ -71,29 +71,6 @@ function doItButtonClicked() {
         }
     }
 
-
-    //try to optimize arrays of addresses - placeidArr
-    // ??
-    var optimizeWaypoints='';
-            setTimeout( function () {
-            console.log(placeidArr.length);
-            for (var i = 1; i < placeidArr.length; i++) {
-                optimizeWaypoints += placeidArr[i-1] + "%7Cplace_id%3A";
-            }
-            optimizeWaypoints = optimizeWaypoints.concat(placeidArr[placeidArr.length-1]);
-            console.log(optimizeWaypoints);
-                
-            var urlOptimize = "https://maps.googleapis.com/maps/api/directions/json?destination=place_id%3AChIJwyldiQg2HRURx-FEiADtZPA&origin=place_id%3AChIJ41SEZPhJHRUR7snt28fabB0&waypoints=optimize%3Atrue%7Cplace_id%3A" + optimizeWaypoints + "&key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM";
-            console.log(urlOptimize);
-
-            fetch(urlOptimize, { mode: 'no-cors'});
-
-                
-
-    },2500);
-
-
-
     var urlString='';
         setTimeout( function () {
             console.log(placeidArr.length);
@@ -103,18 +80,15 @@ function doItButtonClicked() {
             urlString = urlString.concat(placeidArr[placeidArr.length-1]);
             console.log(urlString);
                 
-            var url = "https://transportation-optimizing.web.app/optRoute/index.html?waypoint=" + urlString;
+            var url = "https://transportation-optimizing.web.app/optRoute/optRoute.html?waypoint=" + urlString;
             console.log(url);
                 
             // var a = document.getElementById('resultroute');
             // a.href = url;
-            document.getElementById('mapFrame').style.height = "600px";
-            document.getElementById('resultroute').style.height = "600px";
+            document.getElementById('mapFrame').style.height = "850px";
+            document.getElementById('resultroute').style.height = "850px";
             document.getElementById("resultroute").src = url;
-
-
-
-    },1500);
+    },3500);
 
 
 }

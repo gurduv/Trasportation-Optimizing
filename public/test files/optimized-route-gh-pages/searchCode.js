@@ -1,28 +1,37 @@
+//https://developers.google.com/maps/documentation/javascript/reference?hl=en
 
-var map; // var for maps element
+//things to add:
+//add an info button that displays the address when it's hovered over
+//or when the location name is hovered over
+//make waypoints draggable
+//check for dupplicate waypoints
+
+var map;
 var markers = []; //store the location markers we add tinyurl.com/gmproj5
-var directionsDisplay; // var for showing or hiding directions
-var directionsService; // var for calling directions services
+var directionsDisplay;
+var directionsService;
 
-var start;         // start place id
-var end;           // end place id
-var waypoint = []; // array for holding place id's objects of each travel stopping point (between start and stop)
+var start;         // start place
+var end;           // end place
+var waypoint = []; // array for holding places objects of each travel stopping point (between start and stop)
 
+// https://developers.google.com/maps/documentation/javascript/directions#waypoint-limits
 var MAX_WAYPOINTS = 25; // max number of waypoints allowed by API (25 max as of Jan 27, 2020)
 
-document.getElementById("loc2").placeholder = "Enter up to " + MAX_WAYPOINTS + " waypoints"; // placeholder text for input filed for waypoints
+document.getElementById("loc2").placeholder = "Enter up to " + MAX_WAYPOINTS + " waypoints";
 
-//called after the google maps api is loaded - this runs first
+//called after the google maps api is loaded
 function initMap() {
     //create map object
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 32, lng: 35},
-        zoom: 9
+        center: {lat: 37.09024, lng: -100.712891}, //initially centered in the middle of the US, quickly replaced with current location
+        zoom: 4
+//        mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     
     
     // attempt to get user location with W3C Geolocation (Preferred). see: tinyurl.com/gmproj3
-    var initialLocation; // then this runs
+    var initialLocation;
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -32,49 +41,65 @@ function initMap() {
     }
     
     
+    //DIRECTIONS based on directions-panel.html from tinyurl.com/gmproj2
+    //automatically updated when a new route is set
     directionsService = new google.maps.DirectionsService
 
     var opts={markerOptions: {visible:false}};
-    directionsDisplay = new google.maps.DirectionsRenderer(opts); // var calling the directions display
+	directionsDisplay = new google.maps.DirectionsRenderer(opts);
+
+    //directionsDisplay = new google.maps.DirectionsRenderer();
+
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     
-    directionsDisplay.setMap(map); //shows the route on the map
-    directionsDisplay.setPanel(document.getElementById('directionsPanel')); // sends the route to the directionspanel
     
+    
+    // Create the searchBoxes and link them to the UI element. from: tinyurl.com/gmproj1
     var searchBox0 = new google.maps.places.SearchBox(document.getElementById('loc1'));
     var searchBox1 = new google.maps.places.SearchBox(document.getElementById('loc2'));
     var searchBox2 = new google.maps.places.SearchBox(document.getElementById('loc3'));
     
+    // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function () {
         searchBox0.setBounds(map.getBounds());
         searchBox1.setBounds(map.getBounds());    
         searchBox2.setBounds(map.getBounds());
     });
+            
     
+    //if searchBox0 is used
     searchBox0.addListener('places_changed', function () {
-        document.getElementById("loc1").value = "";
+        document.getElementById("loc1").value = ""; //clear searchbox
         addPoint(searchBox0.getPlaces()[0], 'start');
     });
     
+    //if searchBox1 is used
     searchBox1.addListener('places_changed', function () {
         document.getElementById("loc2").value = "";
         addPoint(searchBox1.getPlaces()[0], 'waypoint');
     });
     
+    //if searchBox2 is used
     searchBox2.addListener('places_changed', function () {
         addPoint(searchBox2.getPlaces()[0], 'end');
     });
     toggleSearchBoxes(true);
     
+    // now that google APIs are loaded:
+    //const placesService = new google.maps.places.PlacesService(map);
     const geocoder = new google.maps.Geocoder();
     loadFromUrl(geocoder);
     
+    //place the search boxes on the top left of the map
+//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('loc1'));
+//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('loc2'));
+//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('loc3'));
 }
 
+
 function calcRoute(routeStart) {
-    updateUrl();
-    console.log(start);
-    console.log(end);
-    console.log(waypoint);
+    updateUrl(); // update URL (because start/end/waypoint state just changed)
 
     if(typeof start == 'undefined' || typeof end == 'undefined' || typeof waypoint[0] == 'undefined') {
         var pan = document.getElementById('directionsPanel');
@@ -83,24 +108,26 @@ function calcRoute(routeStart) {
             document.getElementById("ham").src='images/grey-hamburger.png';
         }
         
-        directionsDisplay.setMap(null);
+        directionsDisplay.setMap(null); //in case the map was previously drawn
         for(var i=0; i<markers.length; i++)
             if(typeof markers[i] != 'undefined')
-                markers[i].setMap(map);
-        return;
+                markers[i].setMap(map); //redraw the points that were previously turned off
+        return; //don't calculate route if all needed points aren't set
     }
 //    printLocations();
     directionsDisplay.setMap(map);
     const actualWaypoints = waypoint.map(w => ({
-        location: w.geometry.location,
+        location: w.geometry.location, //latlng object
         stopover: true
     }));
     
+    // console.log("***calculating route");
+    // https://developers.google.com/maps/documentation/javascript/directions
     const request = {
-        origin: start.geometry.location,
+        origin: start.geometry.location, //latlng object
         destination: end.geometry.location,
         waypoints: actualWaypoints,
-        optimizeWaypoints: true,
+        optimizeWaypoints: true, ///VERY IMPORTANT!!! WOW example: tinyurl.com/gmproj6
         travelMode: google.maps.TravelMode.DRIVING
     }
     
@@ -116,95 +143,42 @@ function calcRoute(routeStart) {
         pan.className = ""; //make panel visible
         document.getElementById("ham").src='images/hamburger.png';
     }
-
 }
+
 
 function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates a new marker if it doesn't exist
     
-    if(n==0) {
-        var link = "images/markerStart.png";
-        var labelText = "התחלה";
-        if(typeof markers[n] == 'undefined') { //if it doesn't exist
+    if(n==0)
+        var link = "images/minibus.png";
+    if(n==1)
+        var link = "images/minibus.png";
+    if(n>1)
+        var link = "images/minibus.png";
+    
+    if(typeof markers[n] == 'undefined') { //if it doesn't exist
         markers[n] = new google.maps.Marker({ //create new marker
             position: plc.geometry.location, //a latlng object
             map: map,
-            label: { text:labelText,
+            label: { text: (n+1).toString() + " " + plc.formatted_address,
                                 color: "yellow",
                                 className: "labelText",
                                 fontWeight: "bold",
                     },
             animation: google.maps.Animation.DROP,
             icon: link,
-            clickable: true,
-            title: plc.formatted_address + "\nClick to Navigate",
+            title: n.toString(),
             draggable: false, //make true later if the loc is retrieved from the marker
-            url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
+            url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=ChIJiVGHV2fQAhURvsx_q_zhIic&travelmode=driving"
         });
         console.log(markers[n].label);
-
-            google.maps.event.addListener(markers[n], "click", () => {
-            window.open(markers[n].url, '_blank');
+            google.maps.event.addListener(markers[n], 'click', function() {
+            window.location.href = this.url;
         });
 
     }
     else {
         markers[n].setPosition(plc.geometry.location);
-    }
-    }
-    if(n==1) {
-        var link = "images/markerEnd.png";
-        var labelText = "סיום";
-        if(typeof markers[n] == 'undefined') { //if it doesn't exist
-        markers[n] = new google.maps.Marker({ //create new marker
-            position: plc.geometry.location, //a latlng object
-            map: map,
-            label: { text:labelText,
-                                color: "yellow",
-                                className: "labelText",
-                                fontWeight: "bold",
-                    },
-            animation: google.maps.Animation.DROP,
-            icon: link,
-            clickable: true,
-            title: plc.formatted_address + "\nלחץ לניווט ליעד",
-            draggable: false, //make true later if the loc is retrieved from the marker
-            url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
-        });
-        console.log(markers[n].label);
-
-            google.maps.event.addListener(markers[n], "click", () => {
-            window.open(markers[n].url, '_blank');
-        });
-
-    }
-    else {
-        markers[n].setPosition(plc.geometry.location);
-    }
-    }
-    if(n>1) {
-        var link = "images/marker.png";
-        if(typeof markers[n] == 'undefined') { //if it doesn't exist
-        markers[n] = new google.maps.Marker({ //create new marker
-            position: plc.geometry.location, //a latlng object
-            map: map,
-            animation: google.maps.Animation.DROP,
-            icon: link,
-            clickable: true,
-            title: plc.formatted_address + "\nClick to Navigate",
-            draggable: false, //make true later if the loc is retrieved from the marker
-            url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
-        });
-        console.log(markers[n].label);
-
-            google.maps.event.addListener(markers[n], "click", () => {
-            window.open(markers[n].url, '_blank');
-        });
-
-    }
-    else {
-        markers[n].setPosition(plc.geometry.location);
-    }
-    }
+    }    
 }
 
 
@@ -229,18 +203,19 @@ function toggleSearchBoxes(enabled) {
   }
 }
 
+/**
+ * replace waypoints, start, stop using data in URL
+ * TODO: set a window.onpopstate listener as well to call this?
+ */
 async function loadFromUrl(geocoder) {
-    console.log('loading from url geocoder');
-    toggleSearchBoxes(false);
+    console.log('loading from url');
+    toggleSearchBoxes(false); // disable searchboxes
     const queryParams = new URLSearchParams(window.location.search);
     let request;
 
-    const startPlaceId = 'ChIJ41SEZPhJHRUR7snt28fabB0'; 
-    const endPlaceId = 'ChIJwyldiQg2HRURx-FEiADtZPA';
+    const startPlaceId = queryParams.get('start');
+    const endPlaceId = queryParams.get('end');
     const waypointIds = queryParams.get('waypoint') ? queryParams.get('waypoint').split(',') : [];
-
-    console.log('startPlaceId = '); console.log(startPlaceId);
-    console.log('endPlaceId = '); console.log(endPlaceId);
     console.log('waypointIds = '); console.log(waypointIds);
 
     let promises = [];
@@ -270,11 +245,16 @@ async function loadFromUrl(geocoder) {
       calcRoute();
     }
 
-    toggleSearchBoxes(true);
-    
+    toggleSearchBoxes(true); // enable searchboxes
 }
 
   
+/**
+ * given a google placeId, convert it to a place object and pass it to the provided callback.
+ * returns a promise.
+ * based on https://developers.google.com/maps/documentation/javascript/examples/geocoding-place-id#maps_geocoding_place_id-javascript
+ *   and https://developers.google.com/maps/documentation/javascript/geocoding
+ */
 function expandPlaceId(geocoder, placeId, callback) {
     return geocoder
       .geocode({ placeId: placeId })
@@ -288,8 +268,23 @@ function expandPlaceId(geocoder, placeId, callback) {
       })
       .catch((e) => console.error("Geocoder failed due to: " + e));
 
+    // note that the result won't have the 'name' field
+    // we could lookup the 'name' for this place with an additional API call, but not sure its worth it:
+    // or we could store the lat/lng in the URL instead so we can just query the places API below (skipping the geocode step)
+    /*
+    // https://developers.google.com/maps/documentation/javascript/reference/places-service#PlacesService.findPlaceFromQuery
+    request = { query: queryParams.get('start'), fields: ['geometry.location', 'name', 'formatted_address'] };
+    placesService.findPlaceFromQuery(request, function(result, status) {
+        console.log('result = '); console.log(result);
+        console.log('status='); console.log(status);
+    });
+    */
 }
 
+
+/**
+ * update URL to store waypoints/start/stop locations.
+ */
 function updateUrl() {
     console.log('updating url');
     let params = { waypoint: waypoint.map(p => p.place_id) };
@@ -298,7 +293,6 @@ function updateUrl() {
 
     params = new URLSearchParams(params);
     window.history.pushState({}, '', `${window.location.pathname}?${params}`);
-
 }
 
 /**
@@ -317,6 +311,7 @@ function addPoint(place, pointType, computeDirections=true) {
         start = place; //add the first place from the search
         //console.log("start place = "); console.log(start);
         setMarker(0, start);
+        console.log(start);
         document.getElementById("startInfo").innerHTML = "<br>" + placeName; //shortened name
         document.getElementById("startInfo").title = start['formatted_address'];
         //document.getElementById("startInfo").innerHTML = "<br>" + start['formatted_address'];
@@ -341,11 +336,10 @@ function addPoint(place, pointType, computeDirections=true) {
           setMarker(i+2, waypoint[i]);
           document.getElementById("waypointsInfo").innerHTML += "<li id='point" + i + "'>" + "<t class='tooltip' title='" + place['formatted_address'] + "'>" +
           placeName +
-              "</t><a href='javascript:void(0)' onclick='deletePoint(this)'></a>\
+              "</t><a href='javascript:void(0)' onclick='deletePoint(this)'><img src='images/delete.png' height='10' hspace='10'></a>\
               <a href='javascript:void(0)'>"; // [X]
 //            console.log("waypoint=" + waypoint + '\n');
           calcRoute();
-          
 
     } else {
       console.error(`invalid pointType '${pointType}' for addPoint()`);
@@ -376,6 +370,7 @@ function deletePoint(elem) { //tinyurl.com/gmproj8
 //    console.log("waypoint=" + waypoint);
     calcRoute();
 }
+
 
 function printLocations() {
     console.log("Printing geometry.location of all locations");
