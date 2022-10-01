@@ -37,12 +37,19 @@ function doItButtonClicked() {
     var address = fullAddressArr[outputIndex];
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-            console.log(results[0].geometry.location.lat())
-            console.log(results[0].geometry.location.lng())
+            console.log("Lat: " + results[0].geometry.location.lat())
+            console.log("Long: " + results[0].geometry.location.lng())
             console.log(results[0].place_id);
 
             document.getElementById('location').innerHTML = results[0].geometry.location;
             document.getElementById('placeID').innerHTML = results[0].place_id;
+
+
+            var wazeUrl = "https://waze.com/ul?q=" + results[0].geometry.location.lat() + "," + results[0].geometry.location.lng() + "&navigate=yes&zoom=17";
+            console.log(wazeUrl);
+            // document.getElementById("wazeLink").src = wazeUrl;
+            var a = document.getElementById('wazeLink');
+            a.href = wazeUrl;
 
             map.setCenter(results[0].geometry.location);
             map.setZoom(17);

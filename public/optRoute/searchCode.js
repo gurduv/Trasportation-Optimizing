@@ -136,7 +136,7 @@ function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates
             animation: google.maps.Animation.DROP,
             icon: link,
             clickable: true,
-            title: plc.formatted_address + "\nClick to Navigate",
+            title: plc.formatted_address + "\nלחץ לניווט ליעד",
             draggable: false, //make true later if the loc is retrieved from the marker
             url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
         });
@@ -190,7 +190,7 @@ function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates
             animation: google.maps.Animation.DROP,
             icon: link,
             clickable: true,
-            title: plc.formatted_address + "\nClick to Navigate",
+            title: plc.formatted_address + "\nלחץ לניווט ליעד",
             draggable: false, //make true later if the loc is retrieved from the marker
             url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
         });

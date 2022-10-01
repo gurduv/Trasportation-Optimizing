@@ -29,14 +29,19 @@ function doItButtonClicked() {
         var address = jumboAddressArr[0][outputIndex][i];
         geocoder.geocode( { 'address': address}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                //console.log(results[0].geometry.location.lat())
-                //console.log(results[0].geometry.location.lng())
+                console.log(results[0].geometry.location.lat())
+                console.log(results[0].geometry.location.lng())
                 console.log(results[0].place_id);
                 var navURL = "https://www.google.com/maps/dir/?api=1&destination=" + jumboAddressArr[0][outputIndex][i] + "&destination_place_id=" + results[0].place_id + "&travelmode=driving";
                 console.log(navURL);
-
                 var nav = document.getElementById('nav'+j);
                 nav.href = navURL;
+
+                var navWazeURL = "https://waze.com/ul?q=" + results[0].geometry.location.lat() + "," + results[0].geometry.location.lng() + "&navigate=yes&zoom=17";;
+                console.log(navWazeURL);
+                var navWaze = document.getElementById('navWaze'+j);
+                navWaze.href = navWazeURL;
+
 
                 placeidArr.push(results[0].place_id);
                 //document.getElementById('location').innerHTML = results[0].geometry.location;
