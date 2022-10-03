@@ -91,10 +91,10 @@
 
             var busNum="";
 
-            if (addressLen%10 == 0) {
-                 busNum = addressLen/10;
+            if (addressLen%8 == 0) {
+                 busNum = addressLen/8;
             } else {
-                const busNumTMP = addressLen/10;
+                const busNumTMP = addressLen/8;
                 busNum = Math.ceil(busNumTMP);
             }
 
@@ -113,7 +113,7 @@
             }
 
             //console.log(sliceIntoChunks(fullAddressArr, 10));
-            sliceIntoChunks(fullAddressArr, 10);
+            sliceIntoChunks(fullAddressArr, 8);
             //console.log(jumboAddressArr);
 
             var select = document.getElementById("bus_array");

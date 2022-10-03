@@ -8,7 +8,7 @@ function doItButtonClicked() {
     //document.getElementById('output').innerHTML = outputIndex;
 
     // clear table before adding new addresses
-    for (var i = 0; i <10; i++) {
+    for (var i = 0; i <8; i++) {
                 var j=i+1;
                 document.getElementById('address'+j).innerHTML = "";
                 document.getElementById('name'+j).innerHTML = "";
@@ -53,7 +53,7 @@ function doItButtonClicked() {
                 console.log('Cannot find Geocode for:' + address);
             }
         });
-         },2500);
+         },3500);
     }
     
     console.log(placeidArr);
@@ -93,7 +93,7 @@ function doItButtonClicked() {
             document.getElementById('mapFrame').style.height = "850px";
             document.getElementById('resultroute').style.height = "850px";
             document.getElementById("resultroute").src = url;
-    },3500);
+    },4500);
 
 
 }
