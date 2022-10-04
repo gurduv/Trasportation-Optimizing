@@ -2,10 +2,8 @@
 <html>
     
   <head>
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
             integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-
 
     <title>Keshet Employee Management System</title>
     <meta name="viewport" content="initial-scale=1.0">
@@ -15,16 +13,15 @@
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/index_styles.css">
 
-
   </head>
     
 <body lang="he" dir="rtl">
           <center><h1>מסלול הסעה למשמרת</h1></center>    
 
     <article style="text-align: center;">
-        <button style="font-size: 1.2em;background-color: red; color: white; padding: 15px 25px;"
+      <button style="font-size: 1.2em;background-color: red; color: white; padding: 15px 25px;"
             onclick="javascript:window.location='mailto:?subject=מסלול הסעות להיום&body=' + window.location;">שלח קישור למסלול במייל</button>
-    <br><br>
+      <br><br>
     </article>
       
       <div id="placeInfo" class="d-none" style="padding: 15px">
@@ -49,7 +46,6 @@
           <h3 style="color:red">סיום המסלול<br>(עמותת קשת סניף גבעת השלושה):</h3>
           <div class="searchInput">
               <p id="loc3"></p>
-
           </div>
            <t id="endInfo" class="tooltip"></t> 
       </div>
@@ -60,7 +56,6 @@
     
     <div id="directionsPanel"></div>
         
-      
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="searchCode.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM&callback=initMap&libraries=places&region=IL&language=he" async defer></script>

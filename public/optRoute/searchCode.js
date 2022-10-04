@@ -20,7 +20,6 @@ function initMap() {
         zoom: 9
     });
     
-    
     // attempt to get user location with W3C Geolocation (Preferred). see: tinyurl.com/gmproj3
     var initialLocation; // then this runs
     if(navigator.geolocation) {
@@ -30,7 +29,6 @@ function initMap() {
             map.setZoom(11);
         });
     }
-    
     
     directionsService = new google.maps.DirectionsService
 
@@ -116,7 +114,6 @@ function calcRoute(routeStart) {
         pan.className = ""; //make panel visible
         document.getElementById("ham").src='images/hamburger.png';
     }
-
 }
 
 function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates a new marker if it doesn't exist
@@ -137,7 +134,7 @@ function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates
             icon: link,
             clickable: true,
             title: plc.formatted_address + "\nלחץ לניווט ליעד",
-            draggable: false, //make true later if the loc is retrieved from the marker
+            draggable: false,
             url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
         });
         console.log(markers[n].label);
@@ -167,7 +164,7 @@ function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates
             icon: link,
             clickable: true,
             title: plc.formatted_address + "\nלחץ לניווט ליעד",
-            draggable: false, //make true later if the loc is retrieved from the marker
+            draggable: false,
             url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
         });
         console.log(markers[n].label);
@@ -191,7 +188,7 @@ function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates
             icon: link,
             clickable: true,
             title: plc.formatted_address + "\nלחץ לניווט ליעד",
-            draggable: false, //make true later if the loc is retrieved from the marker
+            draggable: false,
             url: "https://www.google.com/maps/dir/?api=1&destination=המייסדים%201%20שואבה&destination_place_id=" + plc.place_id + "&travelmode=driving"
         });
         console.log(markers[n].label);
@@ -207,17 +204,12 @@ function setMarker(n, plc) { //sets markers[n] to the latlng object loc, creates
     }
 }
 
-
 function clearMarkers() {
     for(var i=0; i<markers.length; i++)
         if(typeof markers[i] != 'undefined')
-            markers[i].setMap(null); //turn markers off but don't delete in case directionsDisplay is turned off
-    // console.log("***markers cleared");
+            markers[i].setMap(null);
 }
 
-/**
- * disable or enable all searchboxes.
- */
 function toggleSearchBoxes(enabled) {
   document.getElementById('loc1').disabled = !enabled;
   document.getElementById('loc2').disabled = !enabled;
@@ -270,11 +262,9 @@ async function loadFromUrl(geocoder) {
       calcRoute();
     }
 
-    toggleSearchBoxes(true);
-    
+    toggleSearchBoxes(true);    
 }
 
-  
 function expandPlaceId(geocoder, placeId, callback) {
     return geocoder
       .geocode({ placeId: placeId })
@@ -283,7 +273,7 @@ function expandPlaceId(geocoder, placeId, callback) {
               console.warn(`unable to find result for place_id '${placeId}'`);
               return;
           }
-          const res = results[0]; //should have fields res.geometry.location and res.formatted_address;
+          const res = results[0];
           callback(res);
       })
       .catch((e) => console.error("Geocoder failed due to: " + e));
@@ -303,23 +293,19 @@ function updateUrl() {
 
 /**
  * add a place as the start, end, or a waypoint on the route.
- *
  * @param place the place to be added
  * @param pointType (str) 'start' | 'end' | 'waypoint'
  * @param computeDirections (bool) whether to call calcRoute() after adding the point (default true)
  */
 function addPoint(place, pointType, computeDirections=true) {
-    if(exists(place, false)) return; // prevent adding a duplicate place
-    // if this place came from geocode lookup, it won't have a 'name' field:
+    if(exists(place, false)) return;
     const placeName = place['name'] || place['formatted_address'];
 
     if (pointType === 'start') {
-        start = place; //add the first place from the search
-        //console.log("start place = "); console.log(start);
+        start = place;
         setMarker(0, start);
-        document.getElementById("startInfo").innerHTML = "<br>" + placeName; //shortened name
+        document.getElementById("startInfo").innerHTML = "<br>" + placeName;
         document.getElementById("startInfo").title = start['formatted_address'];
-        //document.getElementById("startInfo").innerHTML = "<br>" + start['formatted_address'];
         calcRoute();
 
     } else if (pointType === 'end') {
@@ -331,21 +317,18 @@ function addPoint(place, pointType, computeDirections=true) {
         calcRoute();
 
     } else if (pointType === 'waypoint') {
-          if(waypoint.length >= MAX_WAYPOINTS) { // check against max number of waypoints
+          if(waypoint.length >= MAX_WAYPOINTS) { 
               alert("Only " + MAX_WAYPOINTS + "  waypoints are allowed. Please remove a waypoint before adding a new one.");
               return;
           }
-          waypoint.push(place); // add place to end of array
-          //console.log('added new waypoint, markers = '); console.log(markers);
+          waypoint.push(place);
           const i = waypoint.length-1;
           setMarker(i+2, waypoint[i]);
           document.getElementById("waypointsInfo").innerHTML += "<li id='point" + i + "'>" + "<t class='tooltip' title='" + place['formatted_address'] + "'>" +
           placeName +
               "</t><a href='javascript:void(0)' onclick='deletePoint(this)'></a>\
-              <a href='javascript:void(0)'>"; // [X]
-//            console.log("waypoint=" + waypoint + '\n');
+              <a href='javascript:void(0)'>";
           calcRoute();
-          
 
     } else {
       console.error(`invalid pointType '${pointType}' for addPoint()`);
@@ -357,25 +340,6 @@ function addPoint(place, pointType, computeDirections=true) {
   }
 }
 
-
-function deletePoint(elem) { //tinyurl.com/gmproj8
-    elem = elem.parentNode; //a ul element with id="pointn" where n is sum number. elem started as the <a> element that was clicked
-    var i = parseInt(elem.id.substring(5));
-                
-    waypoint.splice(i,1); //location i, remove 1 element
-    markers[i+2].setMap(null);
-    markers.splice(i+2, 1); //i is offset by 2 bc start and end are in front
-    
-    elem.parentNode.removeChild(document.getElementById("point" + i)); //delete element
-    
-    for(var t=i+1; document.getElementById("point" + t) != null; t++) { //fix ids of the others
-        document.getElementById("point" + t).id = "point" + (t-1);
-    }
-    
-//    console.log("***removed waypoint[" + i + "]");
-//    console.log("waypoint=" + waypoint);
-    calcRoute();
-}
 
 function printLocations() {
     console.log("Printing geometry.location of all locations");
@@ -412,8 +376,7 @@ function exists(plc, isEndpoint) {
         alert("Address:\n" + "'" + plc['formatted_address'] + "'\nis your start or end point!\n");
         return true;
     }
-    return false; //working :D!
-    
+    return false;
 }
 
 //:::JQUERY:::
@@ -427,8 +390,5 @@ $(document).ready(function() {
             panel.toggleClass('hidden');
         }
         
-//        $("#directionsPanel").animate({
-//            left: '0px'
-//        }, 200);
     });
 });

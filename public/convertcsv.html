@@ -20,8 +20,6 @@
                 "AIzaSyAHYcspx40UvnTRuW0YvgVMjBsHrQ9h-aM";
         </script>
         
-        <!-- <link rel="stylesheet" type="text/css" href="/css/currentlocside.css" /> -->
-        <!-- <script type="module" src="/js/currentloc.js"></script> -->
 
     <script type="text/javascript" src="./js/csv2json.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -49,8 +47,6 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav text-right">
                     <a class="nav-link" href="index.html">בית</a>
-                    <!-- <a class="nav-link" href="shifts.html">משמרות</a> -->
-                    <!-- <a class="nav-link" href="tasks.html">משימות</a> -->
                     <a class="nav-link active" href="convertcsv.html">הסעות <span class="sr-only">(current)</span></a>
                     <a class="nav-link" href="employees.html">עובדים</a>
                     <a class="nav-link" href="guides.html">הדרכות</a>
@@ -78,10 +74,6 @@
                                     <input type="button" value="שליחת קובץ לשרת ההסעות" class="btn btn-primary" onClick="applyconvert()">
                                 </div>  
 
-                                <!-- <div class="form-group">
-                                    <input type="submit" value="שליחת קובץ לשרת ההסעות" class="btn btn-primary" name="submit" onclick="sendtoFirebase()">
-                                </div> -->
-
                                 <div class="form-group">
                                         <button id="reload" type="button" class="btn btn-danger">איפוס בחירה</button>
                                         <script>
@@ -91,11 +83,7 @@
                                             });
                                         </script>
                                 </div>
-                                
-                                <!-- <textarea id="execution" rows="18" spellcheck="false" disabled=""></textarea> -->
-                                <!-- <h2>תוצאת ההמרה</h2>
-                                <pre id="execution"></pre> -->
-                                
+                                                                
                             </form>
                         </div>
 
@@ -124,12 +112,8 @@
                                     reader.readAsText(file, "UTF-8");
                                     reader.onload = function (evt) {
                                         csvcontent = evt.target.result;
-                                        // alert(csvcontent);
                                         const json = CSVJSON.csv2json(csvcontent, { parseNumbers: true });
-                                        // alert(json);
                                         const execution = document.getElementById('execution');
-                                        // const result = document.getElementById('result');
-                                        //execution.innerText = JSON.stringify(json, null, 2);
                                         const jsonContent = JSON.stringify(json, null, 2);
                                         console.log(jsonContent);
 
@@ -247,9 +231,6 @@
                             </div>
                         </div>
                     </article>
-                    <!-- <article id="eventsArticle" class="text-center">
-                        <button class="btn btn-primary mb-2" onclick=" window.open('https://transportation-optimizing.web.app/currentlocation.html','_blank')">הצג מיקום נוכחי</button>                        
-                    </article> -->
                 </aside>
             </div>
 

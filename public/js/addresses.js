@@ -112,7 +112,7 @@
                 }
             }
 
-            //console.log(sliceIntoChunks(fullAddressArr, 10));
+            //console.log(sliceIntoChunks(fullAddressArr, 8));
             sliceIntoChunks(fullAddressArr, 8);
             //console.log(jumboAddressArr);
 
