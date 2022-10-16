@@ -13,7 +13,7 @@
     display: none;
     position: fixed;
     margin: auto;
-    background: rgba(144, 210, 238, 0.857));
+    background: rgba(144, 210, 238, 0.857);
     border-radius: 7px;
     width: 500px;
     z-index: 10;
@@ -24,7 +24,7 @@
         display: none;
         position: fixed;
         margin: auto;
-        background: rgba(144, 210, 238, 0.857));
+        background: rgba(144, 210, 238, 0.857);
         border-radius: 7px;
         width: 150px;
         z-index: 10;
